@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import NewsCard from "@/components/NewsCard";
 import type { NewsCardProps } from "@/components/NewsCard";
+import Reveal from "@/components/motion/Reveal";
 
 // ── API types ─────────────────────────────────────────────────
 interface DevToUser {
@@ -116,23 +117,23 @@ export default function BlogPage() {
   const [query,        setQuery]        = useState("");
   const [lastUpdated,  setLastUpdated]  = useState<Date | null>(null);
 
-  const fetchAll = useCallback(async () => {
+  const fetchAll = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
     setError(false);
 
     try {
       // ── Dev.to — 4 parallel tag fetches ───────────────────
       const [webdev, react, node, ai] = await Promise.all([
-        fetch("https://dev.to/api/articles?tag=webdev&per_page=12").then(
+        fetch("https://dev.to/api/articles?tag=webdev&per_page=12", { signal }).then(
           (r) => r.json() as Promise<DevToArticle[]>,
         ),
-        fetch("https://dev.to/api/articles?tag=react&per_page=6").then(
+        fetch("https://dev.to/api/articles?tag=react&per_page=6", { signal }).then(
           (r) => r.json() as Promise<DevToArticle[]>,
         ),
-        fetch("https://dev.to/api/articles?tag=node&per_page=6").then(
+        fetch("https://dev.to/api/articles?tag=node&per_page=6", { signal }).then(
           (r) => r.json() as Promise<DevToArticle[]>,
         ),
-        fetch("https://dev.to/api/articles?tag=ai&per_page=6").then(
+        fetch("https://dev.to/api/articles?tag=ai&per_page=6", { signal }).then(
           (r) => r.json() as Promise<DevToArticle[]>,
         ),
       ]);
@@ -169,11 +170,12 @@ export default function BlogPage() {
       // ── Hacker News — top 20 stories ──────────────────────
       const topIds = await fetch(
         "https://hacker-news.firebaseio.com/v0/topstories.json",
+        { signal },
       ).then((r) => r.json() as Promise<number[]>);
 
       const hnRaw: (HNItem | null)[] = await Promise.all(
         topIds.slice(0, 20).map((id) =>
-          fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+          fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, { signal })
             .then((r): Promise<HNItem> => r.json())
             .catch((): null => null),
         ),
@@ -201,15 +203,19 @@ export default function BlogPage() {
 
       setArticles([...devtoItems, ...hnItems]);
       setLastUpdated(new Date());
-    } catch {
+    } catch (err) {
+      // An aborted request (e.g. effect cleanup) isn't a real failure — skip the error state
+      if (err instanceof DOMException && err.name === "AbortError") return;
       setError(true);
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchAll();
+    const controller = new AbortController();
+    fetchAll(controller.signal);
+    return () => controller.abort();
   }, [fetchAll]);
 
   // ── Combined filter ──────────────────────────────────────
@@ -245,10 +251,19 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -right-20 w-[400px] h-[400px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[75%] -left-24 w-[400px] h-[400px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
 
       {/* ── Header bar ─────────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -378,7 +393,7 @@ export default function BlogPage() {
               Check your connection and try again
             </p>
             <button
-              onClick={fetchAll}
+              onClick={() => fetchAll()}
               className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#6D28D9] active:scale-95"
             >
               <RotateCw size={14} />
@@ -408,13 +423,9 @@ export default function BlogPage() {
             {filtered.map((article, i) => {
               const { id, ...cardProps } = article;
               return (
-                <div
-                  key={id}
-                  className="animate-fade-in-up"
-                  style={{ animationDelay: `${Math.min(i * 40, 400)}ms` }}
-                >
+                <Reveal key={id} delay={(i % 3) * 0.06}>
                   <NewsCard {...cardProps} />
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -445,7 +456,7 @@ export default function BlogPage() {
               </span>
             </div>
             <button
-              onClick={fetchAll}
+              onClick={() => fetchAll()}
               className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 transition-all hover:border-[#7C3AED] hover:bg-[#7C3AED]/5 dark:hover:bg-[#7C3AED]/10 hover:text-[#7C3AED] dark:hover:text-[#A78BFA]"
             >
               <RotateCw size={14} />

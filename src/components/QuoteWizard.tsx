@@ -126,7 +126,7 @@ function StepIndicator({ current }: { current: number }) {
               </div>
               <span
                 className={[
-                  "text-[10px] font-medium whitespace-nowrap text-center",
+                  "w-14 text-[10px] font-medium text-center leading-tight sm:w-auto sm:whitespace-nowrap",
                   isActive
                     ? "text-[#7C3AED] dark:text-[#A78BFA]"
                     : isCompleted

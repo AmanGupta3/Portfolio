@@ -9,6 +9,7 @@ import {
   Palette,
   Cloud,
   Brain,
+  Megaphone,
   Search,
   Zap,
   CheckCircle2,
@@ -16,6 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import ServiceCard from "@/components/ServiceCard";
+import Reveal from "@/components/motion/Reveal";
 
 // ── Service definitions ──────────────────────────────────────
 const SERVICES = [
@@ -89,13 +91,23 @@ const SERVICES = [
     tags: ["Python", "TensorFlow", "PyTorch", "OpenAI", "LangChain", "Hugging Face"],
     guideLink: "/services/ai-ml",
   },
+  {
+    title: "Digital Marketing",
+    description:
+      "Reach the right audience and turn traffic into customers. We craft SEO, paid media, and content strategies backed by data — so every marketing dollar drives measurable growth.",
+    icon: Megaphone,
+    iconBg: "bg-red-100",
+    iconColor: "text-red-600",
+    tags: ["SEO", "Google Ads", "Meta Ads", "Content Strategy", "Analytics", "Email Marketing"],
+    guideLink: "/services/digital-marketing",
+  },
 ] as const;
 
 // ── Pricing plans ────────────────────────────────────────────
 const PLANS = [
   {
     name: "Starter",
-    price: "$5,000",
+    price: "$2,500",
     duration: "2 – 4 weeks",
     tagline: "Small projects & MVPs",
     popular: false,
@@ -111,7 +123,7 @@ const PLANS = [
   },
   {
     name: "Professional",
-    price: "$15,000",
+    price: "$7,000",
     duration: "6 – 8 weeks",
     tagline: "Growing businesses",
     popular: true,
@@ -128,7 +140,7 @@ const PLANS = [
   },
   {
     name: "Enterprise",
-    price: "$35,000+",
+    price: "$18,000+",
     duration: "10 – 16 weeks",
     tagline: "Large organisations",
     popular: false,
@@ -161,10 +173,19 @@ export default function ServicesPage() {
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[60%] -left-32 w-[380px] h-[380px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
 
       {/* ── Top header bar ───────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -225,13 +246,9 @@ export default function ServicesPage() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((service, i) => (
-              <div
-                key={service.title}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${i * 60}ms` }}
-              >
+              <Reveal key={service.title} delay={(i % 3) * 0.08} className="h-full">
                 <ServiceCard {...service} />
-              </div>
+              </Reveal>
             ))}
           </div>
         ) : (
@@ -277,11 +294,11 @@ export default function ServicesPage() {
 
           {/* Plans grid */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {PLANS.map((plan) => {
+            {PLANS.map((plan, i) => {
               const isPopular = plan.popular;
               return (
+                <Reveal key={plan.name} delay={i * 0.1}>
                 <div
-                  key={plan.name}
                   className={[
                     "relative flex flex-col rounded-2xl p-7 transition-all duration-300",
                     isPopular
@@ -359,6 +376,7 @@ export default function ServicesPage() {
                     <ArrowRight size={14} />
                   </Link>
                 </div>
+                </Reveal>
               );
             })}
           </div>

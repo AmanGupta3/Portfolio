@@ -16,6 +16,8 @@ import {
 } from "react-icons/si";
 import { Cloud, Server } from "lucide-react";
 import TechCard from "@/components/TechCard";
+import Reveal from "@/components/motion/Reveal";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
 
 // ── Category tabs ──────────────────────────────────────────────
 const TABS = ["All", "Frontend", "Backend", "Mobile", "Database", "Cloud", "DevOps"] as const;
@@ -94,10 +96,19 @@ export default function TechnologiesPage() {
   const isFiltering = query.trim() !== "" || activeTab !== "All";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[65%] -left-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
 
       {/* ── Top header bar ───────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -199,13 +210,9 @@ export default function TechnologiesPage() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((tech, i) => (
-              <div
-                key={tech.name}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${i * 40}ms` }}
-              >
+              <Reveal key={tech.name} delay={(i % 3) * 0.06}>
                 <TechCard {...tech} />
-              </div>
+              </Reveal>
             ))}
           </div>
         ) : (
@@ -227,18 +234,20 @@ export default function TechnologiesPage() {
         )}
 
         {/* ── Stats bar ────────────────────────────────────────── */}
-        <div className="animate-fade-in-up mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {STATS.map(({ icon: Icon, value, label }) => (
-            <div
-              key={label}
-              className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-6 text-center shadow-sm"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EDE9FE] dark:bg-[#7C3AED]/20">
-                <Icon size={18} className="text-[#7C3AED]" />
+        <div className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {STATS.map(({ icon: Icon, value, label }, i) => (
+            <Reveal key={label} delay={i * 0.08}>
+              <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-6 text-center shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EDE9FE] dark:bg-[#7C3AED]/20">
+                  <Icon size={18} className="text-[#7C3AED]" />
+                </div>
+                <AnimatedCounter
+                  value={value}
+                  className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white"
+                />
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
               </div>
-              <span className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">{value}</span>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
 

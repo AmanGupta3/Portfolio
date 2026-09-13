@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, ArrowRight, Star, Zap } from "lucide-react";
 import Link from "next/link";
+import ProjectIllustration, { type IllustrationVariant } from "@/components/ProjectIllustration";
 
 interface ProjectCardProps {
   name: string;
@@ -14,6 +15,7 @@ interface ProjectCardProps {
   gradientFrom: string;
   gradientTo: string;
   stats: readonly string[];
+  illustration: IllustrationVariant;
   featured?: boolean;
 }
 
@@ -27,10 +29,10 @@ export default function ProjectCard({
   gradientFrom,
   gradientTo,
   stats,
+  illustration,
   featured = false,
 }: ProjectCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const initial = name.charAt(0);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -64,10 +66,11 @@ export default function ProjectCard({
         {/* Gradient banner */}
         <div className="relative h-40 flex items-center justify-center overflow-hidden" style={bannerStyle}>
 
-          {/* Large decorative initial */}
-          <span className="absolute text-[120px] font-black leading-none select-none text-white/10">
-            {initial}
-          </span>
+          {/* Thematic illustration */}
+          <ProjectIllustration
+            variant={illustration}
+            className="absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-105"
+          />
 
           {/* Category badge */}
           <div className="absolute top-3 left-3 rounded-full bg-black/25 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
@@ -151,10 +154,8 @@ export default function ProjectCard({
             {/* Modal gradient header */}
             <div className="relative flex h-52 flex-shrink-0 items-center justify-center overflow-hidden" style={bannerStyle}>
 
-              {/* Large initial */}
-              <span className="absolute text-[150px] font-black leading-none select-none text-white/10">
-                {initial}
-              </span>
+              {/* Thematic illustration */}
+              <ProjectIllustration variant={illustration} className="absolute inset-0 h-full w-full" />
 
               {/* Category badge */}
               <div className="absolute top-4 left-4 rounded-full bg-black/25 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">

@@ -32,7 +32,10 @@ export const metadata: Metadata = {
   authors:  [{ name: "CODAND" }],
   creator:  "CODAND",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/cod/favicon.ico", sizes: "256x256", type: "image/x-icon" },
+      { url: "/cod/favicon.svg" },
+    ],
   },
 };
 

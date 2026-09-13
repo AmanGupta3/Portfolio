@@ -1,3 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
+
 interface TechCardProps {
   name: string;
   description: string;
@@ -34,19 +39,21 @@ export default function TechCard({
         </div>
 
         {/* Popularity % */}
-        <span className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          {popularity}%
-        </span>
+        <AnimatedCounter
+          value={`${popularity}%`}
+          className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white"
+        />
       </div>
 
       {/* ── Progress bar ── */}
       <div className="mb-4 h-1.5 w-full rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all duration-700"
-          style={{
-            width: `${popularity}%`,
-            background: `linear-gradient(to right, #7C3AED, #2563EB)`,
-          }}
+        <motion.div
+          className="h-full rounded-full"
+          style={{ background: `linear-gradient(to right, #7C3AED, #2563EB)` }}
+          initial={{ width: 0 }}
+          whileInView={{ width: `${popularity}%` }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         />
       </div>
 
@@ -78,9 +85,11 @@ export default function TechCard({
           <span className="text-[11px] font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide">
             Popularity
           </span>
-          <span className="text-[12px] font-semibold" style={{ color: brandColor }}>
-            {popularity}%
-          </span>
+          <AnimatedCounter
+            value={`${popularity}%`}
+            className="text-[12px] font-semibold"
+            style={{ color: brandColor }}
+          />
         </div>
       </div>
     </div>

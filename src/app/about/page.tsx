@@ -3,6 +3,8 @@ import {
   Zap, Heart, Shield, MessageCircle, BookOpen, Users,
   ArrowRight, Sparkles, CheckCircle2, Github, Linkedin, Phone,
 } from "lucide-react";
+import Reveal from "@/components/motion/Reveal";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
 
 // ── Core values ───────────────────────────────────────────────
 const VALUES = [
@@ -62,13 +64,13 @@ const TIMELINE = [
     year: "2023",
     title: "Codand Founded",
     description:
-      "Three co-founders united by one vision — build anything clients need, with no compromise on quality. Codand was born.",
+      "Two co-founders united by one vision — build anything clients need, with no compromise on quality. Codand was born.",
   },
   {
     year: "2023",
     title: "First Project Delivered",
     description:
-      "Delivered our first production application — Freightly, a full-scale logistics and warehouse management platform built for real-world scale.",
+      "Delivered our first production application — Logistar, a full-scale logistics and warehouse management platform built for real-world scale.",
   },
   {
     year: "2023",
@@ -94,6 +96,18 @@ const TIMELINE = [
     description:
       "9+ projects delivered, 5+ enterprise clients, and a hard-earned reputation for building whatever our clients imagine.",
   },
+  {
+    year: "2025",
+    title: "Platform Scaling",
+    description:
+      "Scaled multiple client platforms to handle enterprise-level traffic. Launched Siftly — an AI-powered document intelligence platform — and significantly expanded our cloud and DevOps capabilities.",
+  },
+  {
+    year: "2026",
+    title: "A Trusted Name",
+    description:
+      "Now in our third year, Codand is a recognized name in full-stack and AI development. We continue to take on the industry's most challenging builds with the same no-limits spirit we started with.",
+  },
 ] as const;
 
 // ── Team ──────────────────────────────────────────────────────
@@ -103,24 +117,16 @@ const TEAM = [
     initials: "AA",
     gradientFrom: "#7C3AED",
     gradientTo: "#2563EB",
-    bio: "Leads engineering and architecture at Codand, bringing deep full-stack expertise across modern web, cloud, and API platforms. Anubhav is the technical backbone behind every product the team ships.",
-    tags: ["Full Stack", "Architecture", "React", "Node.js"],
-  },
-  {
-    name: "Ansh Goel",
-    initials: "AG",
-    gradientFrom: "#2563EB",
-    gradientTo: "#06B6D4",
-    bio: "Drives product strategy and client relationships, ensuring every project is scoped, delivered, and exceeds expectations. Ansh is the bridge between client vision and team execution.",
-    tags: ["Product Strategy", "Client Success", "Project Management", "Delivery"],
+    bio: "Leads engineering and architecture at Codand, bringing deep full-stack expertise across modern web, cloud, and API platforms. Anubhav also drives project delivery, keeping every build on schedule without compromising quality.",
+    tags: ["Full Stack", "Architecture", "React", "Node.js", "Project Management", "Delivery"],
   },
   {
     name: "Aman Gupta",
     initials: "AG",
     gradientFrom: "#4F46E5",
     gradientTo: "#7C3AED",
-    bio: "Leads UI/UX design and frontend engineering, crafting interfaces that are as functional as they are beautiful. Aman ensures every product Codand ships feels polished and world-class.",
-    tags: ["UI/UX Design", "Frontend", "Figma", "TypeScript"],
+    bio: "Leads UI/UX design and frontend engineering, crafting interfaces that are as functional as they are beautiful. Aman also owns product strategy and client relationships, ensuring every project is scoped and delivered to exceed expectations.",
+    tags: ["UI/UX Design", "Frontend", "Figma", "TypeScript", "Product Strategy", "Client Success"],
   },
 ] as const;
 
@@ -131,15 +137,24 @@ const STORY_STATS = [
   { value: "3+",  label: "Years Experience"    },
   { value: "98%", label: "Client Satisfaction" },
   { value: "6",   label: "Services Offered"    },
-  { value: "3",   label: "Co-founders"         },
+  { value: "2",   label: "Co-founders"         },
 ] as const;
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-20 -left-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[80%] -right-24 w-[400px] h-[400px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
 
       {/* ── Header bar ───────────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -190,10 +205,10 @@ export default function AboutPage() {
                 &ldquo;that&rsquo;s not our area.&rdquo; Just solutions.
               </p>
               <p>
-                Three co-founders came together with deeply complementary skills — one leading
-                engineering and architecture, one driving product strategy and client success, and
-                one owning design and frontend craft. Together, we cover every layer of a project
-                from first wireframe to production deployment.
+                Two co-founders came together with deeply complementary skills — one leading
+                engineering, architecture, and delivery, and the other owning design, frontend
+                craft, product strategy, and client success. Together, we cover every layer of a
+                project from first wireframe to production deployment.
               </p>
               <p>
                 Our approach is straightforward: put the client first, hold the line on quality,
@@ -222,16 +237,16 @@ export default function AboutPage() {
 
           {/* Right — stats grid */}
           <div className="animate-fade-in-right delay-200 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-2">
-            {STORY_STATS.map(({ value, label }) => (
-              <div
-                key={label}
-                className="flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-7 text-center shadow-sm transition-all duration-300 hover:shadow-md hover:border-gray-200 dark:hover:border-gray-600"
-              >
-                <span className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-[#7C3AED] to-[#2563EB] bg-clip-text text-transparent">
-                  {value}
-                </span>
-                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
-              </div>
+            {STORY_STATS.map(({ value, label }, i) => (
+              <Reveal key={label} delay={i * 0.06}>
+                <div className="flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-7 text-center shadow-sm transition-all duration-300 hover:shadow-md hover:border-gray-200 dark:hover:border-gray-600">
+                  <AnimatedCounter
+                    value={value}
+                    className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-[#7C3AED] to-[#2563EB] bg-clip-text text-transparent"
+                  />
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -257,20 +272,18 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {VALUES.map(({ icon: Icon, title, description, iconColor, iconBg }, i) => (
-              <div
-                key={title}
-                className="animate-fade-in-up flex flex-col rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-gray-200 dark:hover:border-gray-600"
-                style={{ animationDelay: `${i * 60}ms` }}
-              >
-                <div
-                  className="mb-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: iconBg }}
-                >
-                  <Icon size={20} style={{ color: iconColor }} />
+              <Reveal key={title} delay={(i % 3) * 0.08}>
+                <div className="flex flex-col rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:border-gray-200 dark:hover:border-gray-600">
+                  <div
+                    className="mb-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl"
+                    style={{ backgroundColor: iconBg }}
+                  >
+                    <Icon size={20} style={{ color: iconColor }} />
+                  </div>
+                  <h3 className="mb-2 text-[15px] font-bold text-gray-900 dark:text-white">{title}</h3>
+                  <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{description}</p>
                 </div>
-                <h3 className="mb-2 text-[15px] font-bold text-gray-900 dark:text-white">{title}</h3>
-                <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{description}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -302,12 +315,9 @@ export default function AboutPage() {
             <div className="space-y-10">
               {TIMELINE.map((item, i) => {
                 const isLeft = i % 2 === 0;
+                const isCurrent = i === TIMELINE.length - 1;
                 return (
-                  <div
-                    key={item.title}
-                    className="animate-fade-in-up relative grid grid-cols-2"
-                    style={{ animationDelay: `${i * 80}ms` }}
-                  >
+                  <div key={item.title} className="relative grid grid-cols-2">
                     {/* Center dot */}
                     <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
                       <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#7C3AED] bg-white dark:bg-gray-950 shadow-sm">
@@ -318,26 +328,32 @@ export default function AboutPage() {
                     {/* Left column */}
                     <div className={`pr-12 ${isLeft ? "" : "pointer-events-none"}`}>
                       {isLeft && (
-                        <div className="ml-auto max-w-sm rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm text-right">
-                          <span className="mb-2 inline-block rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
-                            {item.year}
-                          </span>
-                          <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
-                          <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
-                        </div>
+                        <Reveal>
+                          <div className="ml-auto max-w-sm rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm text-right">
+                            <span className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
+                              {item.year}
+                              {isCurrent && <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[9px]">NOW</span>}
+                            </span>
+                            <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
+                            <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
+                          </div>
+                        </Reveal>
                       )}
                     </div>
 
                     {/* Right column */}
                     <div className={`pl-12 ${!isLeft ? "" : "pointer-events-none"}`}>
                       {!isLeft && (
-                        <div className="max-w-sm rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
-                          <span className="mb-2 inline-block rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
-                            {item.year}
-                          </span>
-                          <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
-                          <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
-                        </div>
+                        <Reveal>
+                          <div className="max-w-sm rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+                            <span className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
+                              {item.year}
+                              {isCurrent && <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[9px]">NOW</span>}
+                            </span>
+                            <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
+                            <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
+                          </div>
+                        </Reveal>
                       )}
                     </div>
                   </div>
@@ -361,16 +377,18 @@ export default function AboutPage() {
                     </div>
                   </div>
                   {/* Card */}
-                  <div
-                    className="animate-fade-in-up flex-1 rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm"
-                    style={{ animationDelay: `${i * 80}ms` }}
-                  >
-                    <span className="mb-2 inline-block rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
-                      {item.year}
-                    </span>
-                    <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
-                    <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
-                  </div>
+                  <Reveal className="flex-1">
+                    <div className="rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
+                      <span className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-3 py-1 text-[11px] font-bold text-white">
+                        {item.year}
+                        {i === TIMELINE.length - 1 && (
+                          <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[9px]">NOW</span>
+                        )}
+                      </span>
+                      <h3 className="text-[15px] font-bold text-gray-900 dark:text-white mb-1.5">{item.title}</h3>
+                      <p className="text-[13px] leading-relaxed text-gray-500 dark:text-gray-400">{item.description}</p>
+                    </div>
+                  </Reveal>
                 </div>
               ))}
             </div>
@@ -392,16 +410,15 @@ export default function AboutPage() {
               Meet the Co-Founders
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-base text-gray-500 dark:text-gray-400">
-              Three builders who started it all
+              Two builders who started it all
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
             {TEAM.map(({ name, initials, gradientFrom, gradientTo, bio, tags }, i) => (
+              <Reveal key={name} delay={i * 0.1}>
               <div
-                key={name}
-                className="animate-fade-in-up flex flex-col items-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-7 shadow-sm text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5"
-                style={{ animationDelay: `${i * 100}ms` }}
+                className="flex flex-col items-center rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-7 shadow-sm text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5"
               >
                 {/* Avatar */}
                 <div
@@ -454,6 +471,7 @@ export default function AboutPage() {
                   </a>
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         </section>

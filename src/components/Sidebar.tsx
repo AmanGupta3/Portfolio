@@ -11,14 +11,13 @@ import {
   Radio,
   Zap,
   Menu,
-  X,
 } from "lucide-react";
 import CodandLogo from "@/components/CodandLogo";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const NAV_LINKS = [
-  { href: "/", label: "Portfolio", icon: FolderOpen },
+  { href: "/portfolio", label: "Portfolio", icon: FolderOpen },
   { href: "/services", label: "Services", icon: Layers },
   { href: "/technologies", label: "Technologies", icon: Cpu },
   { href: "/about", label: "About Us", icon: Users },
@@ -47,21 +46,20 @@ export default function Sidebar() {
     };
   }, [mobileOpen]);
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) => pathname.startsWith(href);
 
   return (
     <>
       {/* ── Mobile hamburger button ── */}
-      <button
-        onClick={() => setMobileOpen(true)}
-        aria-label="Open navigation"
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-[#7C3AED] transition-colors"
-      >
-        <Menu size={22} />
-      </button>
+      {!mobileOpen && (
+        <button
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open navigation"
+          className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-[#7C3AED] transition-colors"
+        >
+          <Menu size={22} />
+        </button>
+      )}
 
       {/* ── Backdrop (mobile only) ── */}
       {mobileOpen && (
@@ -86,17 +84,10 @@ export default function Sidebar() {
         ].join(" ")}
       >
         {/* ── Logo / Brand ── */}
-        <div className="flex items-center justify-between px-5 py-5 border-b border-gray-100 dark:border-gray-700">
-          <CodandLogo variant="full" theme={theme} size="sm" />
-
-          {/* Close button (mobile only) */}
-          <button
-            onClick={() => setMobileOpen(false)}
-            aria-label="Close navigation"
-            className="lg:hidden ml-2 p-1 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex-shrink-0"
-          >
-            <X size={18} />
-          </button>
+        <div className="flex items-center px-5 py-5 border-b border-gray-100 dark:border-gray-700">
+          <Link href="/" aria-label="CODAND home">
+            <CodandLogo variant="full" theme={theme} size="sm" />
+          </Link>
         </div>
 
         {/* ── Nav Links ── */}

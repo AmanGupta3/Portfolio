@@ -7,6 +7,8 @@ import {
   Briefcase, Trophy, Star, Clock,
 } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
+import Reveal from "@/components/motion/Reveal";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
 
 // ── Category tabs ─────────────────────────────────────────────
 const TABS = ["All", "Web App", "Enterprise", "AI/ML", "Cloud"] as const;
@@ -15,7 +17,7 @@ type Tab = (typeof TABS)[number];
 // ── Projects data ─────────────────────────────────────────────
 const PROJECTS = [
   {
-    name: "Freightly",
+    name: "Logistar",
     tagline: "End-to-end logistics & warehouse operations platform",
     shortDescription:
       "A full-scale Warehouse & Transport Management System built for logistics companies to manage shipments, routes, billing, inventory, and compliance — all from a single web platform.",
@@ -26,6 +28,7 @@ const PROJECTS = [
     gradientFrom: "#2563EB",
     gradientTo: "#06B6D4",
     stats: ["1000+ Active Routes", "426+ Tax Invoices", "Multi-branch Operations"] as const,
+    illustration: "logistics" as const,
     featured: true,
   },
   {
@@ -40,6 +43,7 @@ const PROJECTS = [
     gradientFrom: "#F97316",
     gradientTo: "#FACC15",
     stats: ["10+ Modules Built", "Live API Integration", "Enterprise Scale"] as const,
+    illustration: "energy" as const,
     featured: true,
   },
   {
@@ -54,6 +58,7 @@ const PROJECTS = [
     gradientFrom: "#9333EA",
     gradientTo: "#EC4899",
     stats: ["Real-time Call Monitoring", "Auto Cross-questioning", "Live Call Dashboard"] as const,
+    illustration: "voice-ai" as const,
     featured: true,
   },
   {
@@ -68,6 +73,7 @@ const PROJECTS = [
     gradientFrom: "#14B8A6",
     gradientTo: "#34D399",
     stats: ["Role-based Access Control", "File Versioning", "Enterprise Security"] as const,
+    illustration: "cloud" as const,
     featured: false,
   },
   {
@@ -82,6 +88,7 @@ const PROJECTS = [
     gradientFrom: "#4F46E5",
     gradientTo: "#3B82F6",
     stats: ["6+ Department Modules", "Role-based Access", "Full Stack Build"] as const,
+    illustration: "enterprise" as const,
     featured: false,
   },
   {
@@ -96,6 +103,7 @@ const PROJECTS = [
     gradientFrom: "#F43F5E",
     gradientTo: "#FB923C",
     stats: ["Bulk Resume Upload", "AI-powered Ranking", "Smart Shortlisting"] as const,
+    illustration: "resume-ai" as const,
     featured: false,
   },
 ] as const;
@@ -130,10 +138,19 @@ export default function PortfolioPage() {
   const isFiltering = query.trim() !== "" || activeTab !== "All";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[70%] -right-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
 
       {/* ── Top header bar ───────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -242,13 +259,9 @@ export default function PortfolioPage() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((project, i) => (
-              <div
-                key={project.name}
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${i * 60}ms` }}
-              >
+              <Reveal key={project.name} delay={(i % 3) * 0.08}>
                 <ProjectCard {...project} />
-              </div>
+              </Reveal>
             ))}
           </div>
         ) : (
@@ -270,18 +283,20 @@ export default function PortfolioPage() {
         )}
 
         {/* ── Stats bar ────────────────────────────────────────── */}
-        <div className="animate-fade-in-up mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {STATS.map(({ icon: Icon, value, label }) => (
-            <div
-              key={label}
-              className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-6 text-center shadow-sm"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EDE9FE] dark:bg-[#7C3AED]/20">
-                <Icon size={18} className="text-[#7C3AED]" />
+        <div className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {STATS.map(({ icon: Icon, value, label }, i) => (
+            <Reveal key={label} delay={i * 0.08}>
+              <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-6 text-center shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EDE9FE] dark:bg-[#7C3AED]/20">
+                  <Icon size={18} className="text-[#7C3AED]" />
+                </div>
+                <AnimatedCounter
+                  value={value}
+                  className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white"
+                />
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
               </div>
-              <span className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">{value}</span>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, Calendar, Check, ArrowRight, Sparkles } from "lucide-react";
+import { Calendar, Check, ArrowRight, Sparkles } from "lucide-react";
 import QuoteWizard from "@/components/QuoteWizard";
 
 export const metadata: Metadata = {
@@ -20,10 +20,11 @@ const TRUST_PILLS = [
 // ── Why CODAND items ──────────────────────────────────────────────────────────
 
 const WHY_ITEMS = [
-  "Whatever you need — we build it",
-  "3+ years of real project experience",
-  "5+ Enterprise clients served",
-  "98% client satisfaction rate",
+  "No-limits approach — if you can dream it, we can build it",
+  "3+ years delivering enterprise-grade products",
+  "Full-stack team: design, dev, cloud, AI under one roof",
+  "98% client satisfaction with post-launch support included",
+  "Fixed-scope quotes — no surprise billing",
 ];
 
 // ── Consultation what's covered ───────────────────────────────────────────────
@@ -34,12 +35,26 @@ const CONSULTATION_ITEMS = [
   "Timeline & budget estimate",
 ];
 
+// ── Schedule-a-call calendar link ───────────────────────────────────────────────
+
+const SCHEDULE_CALL_URL =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Free+Consultation+with+CODAND&details=30-minute+free+strategy+session+to+discuss+your+project&add=amangupt3189@gmail.com&duration=30";
+
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+      {/* ── Decorative background blobs ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -left-20 w-[400px] h-[400px] rounded-full bg-[#7C3AED]/6 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[60%] -right-24 w-[420px] h-[420px] rounded-full bg-[#2563EB]/6 blur-3xl"
+      />
 
       {/* ── Header bar ── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-5 md:px-10">
+      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -84,30 +99,7 @@ export default function ContactPage() {
           {/* ══ RIGHT — Contact cards ═════════════════════════════════════════ */}
           <div className="space-y-4 lg:sticky lg:top-6 self-start">
 
-            {/* Card 1 — Email Us */}
-            <div className="rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7C3AED]/10">
-                <Mail size={20} className="text-[#7C3AED]" />
-              </div>
-              <h3 className="mb-1 font-semibold text-gray-900 dark:text-white">
-                Email Us
-              </h3>
-              <p className="mb-0.5 text-sm font-medium text-[#7C3AED]">
-                contact@codand.in
-              </p>
-              <p className="mb-4 text-xs text-gray-400 dark:text-gray-500">
-                We reply within 24 hours
-              </p>
-              <a
-                href="mailto:contact@codand.in"
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#7C3AED] px-4 py-2.5 text-sm font-semibold text-[#7C3AED] transition-all hover:bg-[#7C3AED] hover:text-white"
-              >
-                Send Email
-                <ArrowRight size={14} />
-              </a>
-            </div>
-
-            {/* Card 2 — Free Consultation */}
+            {/* Card 1 — Free Consultation */}
             <div className="rounded-2xl border border-[#7C3AED]/20 bg-gradient-to-br from-[#7C3AED]/5 to-[#2563EB]/5 dark:from-[#7C3AED]/10 dark:to-[#2563EB]/10 dark:border-[#7C3AED]/30 p-5 shadow-sm">
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7C3AED]/15">
                 <Calendar size={20} className="text-[#7C3AED]" />
@@ -131,13 +123,18 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 dark:shadow-purple-900/30 transition-all hover:shadow-lg hover:scale-[1.02] active:scale-95">
+              <a
+                href={SCHEDULE_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 dark:shadow-purple-900/30 transition-all hover:shadow-lg hover:scale-[1.02] active:scale-95"
+              >
                 Schedule a Call
                 <ArrowRight size={14} />
-              </button>
+              </a>
             </div>
 
-            {/* Card 3 — Why Choose CODAND */}
+            {/* Card 2 — Why Choose CODAND */}
             <div className="rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
               <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">
                 Why Choose CODAND
@@ -148,7 +145,7 @@ export default function ContactPage() {
                     <div className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
                       <Check size={9} className="text-green-600 dark:text-green-400" />
                     </div>
-                    <span className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <span className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                       {item}
                     </span>
                   </div>
@@ -169,10 +166,15 @@ export default function ContactPage() {
           Schedule a free 30-minute consultation and let&apos;s discuss your project
           in detail.
         </p>
-        <button className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#7C3AED] shadow-md transition-all hover:shadow-lg hover:scale-[1.02] active:scale-95">
+        <a
+          href={SCHEDULE_CALL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#7C3AED] shadow-md transition-all hover:shadow-lg hover:scale-[1.02] active:scale-95"
+        >
           Book Free Consultation
           <ArrowRight size={15} />
-        </button>
+        </a>
       </div>
     </div>
   );

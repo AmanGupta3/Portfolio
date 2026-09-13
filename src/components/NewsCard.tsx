@@ -1,4 +1,5 @@
 import { ArrowRight, Heart, MessageCircle, Clock, ArrowUp } from "lucide-react";
+import NewsIllustration from "@/components/NewsIllustration";
 
 export interface NewsCardProps {
   title: string;
@@ -52,12 +53,10 @@ export default function NewsCard({
           />
         ) : (
           <div
-            className="flex h-full w-full items-center justify-center"
+            className="relative flex h-full w-full items-center justify-center"
             style={{ background: `linear-gradient(135deg, ${gFrom}, ${gTo})` }}
           >
-            <span className="select-none text-[80px] font-black leading-none text-white/15">
-              {title.charAt(0).toUpperCase()}
-            </span>
+            <NewsIllustration className="absolute inset-0 h-full w-full" />
           </div>
         )}
 

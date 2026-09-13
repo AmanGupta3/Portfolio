@@ -3,14 +3,11 @@ import {
   ArrowRight,
   CheckCircle2,
   Star,
-  Users,
   Briefcase,
-  Globe,
-  TrendingUp,
-  Layers,
   Zap,
-  Circle,
 } from "lucide-react";
+import NetworkBackground from "@/components/NetworkBackground";
+import AnimatedCounter from "@/components/motion/AnimatedCounter";
 
 // ── Stats data ──────────────────────────────────────────────
 const STATS = [
@@ -30,12 +27,6 @@ const STATS = [
     label: "Consultation",
   },
 ] as const;
-
-// ── Tech stack badges shown in the mock card ─────────────────
-const TECH_BADGES = ["React", "Node.js", "PostgreSQL", "AWS"] as const;
-
-// ── Mock chart bar heights (decorative) ─────────────────────
-const CHART_BARS = [40, 65, 50, 80, 60, 90, 70] as const;
 
 export default function HomePage() {
   return (
@@ -115,9 +106,10 @@ export default function HomePage() {
                   className="flex flex-col items-center gap-1 px-3 text-center"
                 >
                   <Icon size={16} className="text-[#7C3AED] mb-0.5" />
-                  <span className="text-lg font-bold text-gray-900 dark:text-white leading-none">
-                    {value}
-                  </span>
+                  <AnimatedCounter
+                    value={value}
+                    className="text-lg font-bold text-gray-900 dark:text-white leading-none"
+                  />
                   <span className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">
                     {label}
                   </span>
@@ -126,130 +118,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* ══ RIGHT — Featured project card ════════════════════ */}
-          <div className="animate-fade-in-right delay-200 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[420px]">
-
-              {/* Floating badge — top left */}
-              <div className="absolute -top-4 -left-4 z-10 flex items-center gap-2 rounded-xl bg-white dark:bg-gray-800 px-3 py-2 shadow-lg border border-gray-100 dark:border-gray-700">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#2563EB]">
-                  <Globe size={13} className="text-white" />
-                </div>
-                <div>
-                  <p className="text-[11px] font-semibold text-gray-800 dark:text-gray-100 leading-none">SaaS Platform</p>
-                  <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">Featured Project</p>
-                </div>
-              </div>
-
-              {/* Floating badge — bottom right */}
-              <div className="absolute -bottom-4 -right-4 z-10 flex items-center gap-2 rounded-xl bg-white dark:bg-gray-800 px-3 py-2 shadow-lg border border-gray-100 dark:border-gray-700">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-                  <TrendingUp size={13} className="text-green-600 dark:text-green-400" />
-                </div>
-                <div>
-                  <p className="text-[11px] font-semibold text-gray-800 dark:text-gray-100 leading-none">+340% Growth</p>
-                  <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">Post-launch metric</p>
-                </div>
-              </div>
-
-              {/* ── Main mock browser card ── */}
-              <div className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl shadow-gray-200/70 dark:shadow-gray-900/70">
-
-                {/* Browser chrome bar */}
-                <div className="flex items-center gap-2 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-4 py-3">
-                  <Circle size={9} className="fill-red-400 text-red-400" />
-                  <Circle size={9} className="fill-yellow-400 text-yellow-400" />
-                  <Circle size={9} className="fill-green-400 text-green-400" />
-                  <div className="ml-3 flex-1 rounded-md bg-gray-200 dark:bg-gray-700 px-3 py-1">
-                    <span className="text-[10px] text-gray-400 dark:text-gray-400">app.codand.io/dashboard</span>
-                  </div>
-                </div>
-
-                {/* Mock dashboard content */}
-                <div className="p-5">
-
-                  {/* Top nav row */}
-                  <div className="mb-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 rounded-md bg-gradient-to-br from-[#7C3AED] to-[#2563EB]" />
-                      <div className="h-2.5 w-20 rounded-full bg-gray-200 dark:bg-gray-700" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-gray-700" />
-                      <div className="h-6 w-6 rounded-full bg-[#7C3AED]/20" />
-                    </div>
-                  </div>
-
-                  {/* Stat widgets */}
-                  <div className="mb-4 grid grid-cols-3 gap-2.5">
-                    {[
-                      { label: "Revenue", val: "$84k", color: "from-[#7C3AED] to-[#2563EB]" },
-                      { label: "Users", val: "12.4k", color: "from-[#2563EB] to-cyan-500" },
-                      { label: "Orders", val: "3,291", color: "from-emerald-500 to-teal-400" },
-                    ].map(({ label, val, color }) => (
-                      <div key={label} className="rounded-xl border border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5">
-                        <div className={`mb-1.5 h-1.5 w-8 rounded-full bg-gradient-to-r ${color}`} />
-                        <p className="text-xs font-bold text-gray-800 dark:text-gray-100">{val}</p>
-                        <p className="text-[10px] text-gray-400 dark:text-gray-500">{label}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Bar chart */}
-                  <div className="mb-4 rounded-xl border border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-3">
-                    <div className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
-                        <Layers size={11} className="text-[#7C3AED]" />
-                        <span className="text-[10px] font-semibold text-gray-600 dark:text-gray-300">Monthly Revenue</span>
-                      </div>
-                      <span className="text-[10px] text-[#7C3AED] dark:text-[#A78BFA] font-semibold">+24%</span>
-                    </div>
-                    <div className="flex items-end gap-1.5 h-14">
-                      {CHART_BARS.map((h, i) => (
-                        <div
-                          key={i}
-                          className="flex-1 rounded-t-sm bg-gradient-to-t from-[#7C3AED] to-[#2563EB] opacity-80"
-                          style={{ height: `${h}%` }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* User avatars + activity row */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <Users size={11} className="text-gray-400" />
-                      <span className="text-[10px] text-gray-400 dark:text-gray-500">Active users</span>
-                    </div>
-                    <div className="flex -space-x-2">
-                      {["bg-violet-400", "bg-blue-400", "bg-pink-400", "bg-emerald-400"].map(
-                        (c, i) => (
-                          <div
-                            key={i}
-                            className={`h-5 w-5 rounded-full border-2 border-white dark:border-gray-800 ${c}`}
-                          />
-                        )
-                      )}
-                      <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-600">
-                        <span className="text-[8px] font-semibold text-gray-500 dark:text-gray-300">+9</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom tech stack strip */}
-                <div className="flex items-center gap-2 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-5 py-2.5">
-                  <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500 mr-1">Built with</span>
-                  {TECH_BADGES.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 px-2 py-0.5 text-[10px] font-semibold text-gray-600 dark:text-gray-300 shadow-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+          {/* ══ RIGHT — Animated network background ═══════════════ */}
+          <div className="animate-fade-in-right delay-200 hidden lg:block">
+            <div className="w-full h-[520px]">
+              <NetworkBackground />
             </div>
           </div>
           {/* ══ END RIGHT ══ */}
