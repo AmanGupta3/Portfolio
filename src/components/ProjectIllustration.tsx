@@ -8,7 +8,8 @@ export type IllustrationVariant =
   | "voice-ai"
   | "cloud"
   | "enterprise"
-  | "resume-ai";
+  | "resume-ai"
+  | "travel";
 
 interface ProjectIllustrationProps {
   variant: IllustrationVariant;
@@ -30,6 +31,7 @@ export default function ProjectIllustration({ variant, className }: ProjectIllus
       {variant === "cloud" && <CloudArt />}
       {variant === "enterprise" && <EnterpriseArt />}
       {variant === "resume-ai" && <ResumeAiArt />}
+      {variant === "travel" && <TravelArt />}
     </svg>
   );
 }
@@ -255,6 +257,52 @@ function ResumeAiArt() {
         />
         <path d="M147 70 l4 4 l8 -8" stroke="#F43F5E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </motion.g>
+    </>
+  );
+}
+
+// ── Travel: plane gliding a dashed flight path to a destination pin ────────
+function TravelArt() {
+  return (
+    <>
+      <motion.path
+        d="M14 105 Q 70 50, 120 78 T 206 42"
+        stroke="white"
+        strokeOpacity="0.35"
+        strokeWidth="2"
+        strokeDasharray="6 6"
+        animate={{ strokeDashoffset: [0, -24] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      />
+      <circle cx="14" cy="105" r="5" fill="white" fillOpacity="0.5" />
+      {/* Destination pin */}
+      <path
+        d="M206 24c8 0 14 6 14 14 0 10-14 24-14 24s-14-14-14-24c0-8 6-14 14-14z"
+        fill="white"
+        fillOpacity="0.85"
+      />
+      <circle cx="206" cy="38" r="5" fill="#B45309" />
+      {/* Airplane gliding along the route */}
+      <motion.g
+        animate={{ x: [0, 8, 0], y: [0, -3, 0], rotate: [0, 4, 0] }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "115px 78px" }}
+      >
+        <path
+          d="M95 78 L130 70 L138 74 L108 84 L112 92 L104 90 L98 82 Z"
+          fill="white"
+          fillOpacity="0.9"
+        />
+      </motion.g>
+      {/* Sparkle — exclusivity accent */}
+      <motion.path
+        d="M170 92 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 z"
+        fill="white"
+        fillOpacity="0.7"
+        animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.2, 0.9] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "170px 100px" }}
+      />
     </>
   );
 }

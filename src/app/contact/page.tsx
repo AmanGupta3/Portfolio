@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Calendar, Check, ArrowRight, Sparkles } from "lucide-react";
 import QuoteWizard from "@/components/QuoteWizard";
+import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "Get a Quote",
@@ -42,7 +43,21 @@ const SCHEDULE_CALL_URL =
 
 export default function ContactPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+    <>
+      <PageHero
+        title="Get a Quote"
+        subtitle="Tell us about your project and we&apos;ll get back to you within 24 hours"
+        rightSlot={
+          <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#7C3AED]/20 dark:border-[#7C3AED]/30 bg-[#EDE9FE] dark:bg-[#7C3AED]/10 px-4 py-1.5 flex-shrink-0">
+            <Sparkles size={13} className="text-[#7C3AED]" />
+            <span className="text-xs font-semibold tracking-wide text-[#7C3AED] dark:text-[#A78BFA] uppercase">
+              Free to ask
+            </span>
+          </div>
+        }
+      />
+
+      <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* ── Decorative background blobs ── */}
       <div
         aria-hidden="true"
@@ -52,27 +67,6 @@ export default function ContactPage() {
         aria-hidden="true"
         className="pointer-events-none absolute top-[60%] -right-24 w-[420px] h-[420px] rounded-full bg-[#2563EB]/6 blur-3xl"
       />
-
-      {/* ── Header bar ── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-              Get a Quote
-            </h1>
-            <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
-              Tell us about your project and we&apos;ll get back to you within 24 hours
-            </p>
-          </div>
-          {/* Decorative pill */}
-          <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#7C3AED]/20 dark:border-[#7C3AED]/30 bg-[#EDE9FE] dark:bg-[#7C3AED]/10 px-4 py-1.5">
-            <Sparkles size={13} className="text-[#7C3AED]" />
-            <span className="text-xs font-semibold tracking-wide text-[#7C3AED] dark:text-[#A78BFA] uppercase">
-              Free to ask
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* ── Main content ── */}
       <div className="px-6 py-8 md:px-10 lg:px-16">
@@ -177,5 +171,6 @@ export default function ContactPage() {
         </a>
       </div>
     </div>
+    </>
   );
 }

@@ -9,6 +9,7 @@ import {
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/motion/Reveal";
 import AnimatedCounter from "@/components/motion/AnimatedCounter";
+import PageHero from "@/components/PageHero";
 
 // ── Category tabs ─────────────────────────────────────────────
 const TABS = ["All", "Web App", "Enterprise", "AI/ML", "Cloud"] as const;
@@ -32,19 +33,19 @@ const PROJECTS = [
     featured: true,
   },
   {
-    name: "PetroDesk",
-    tagline: "Enterprise data portal for India's largest oil & gas company",
+    name: "Lyx Al Asad",
+    tagline: "Luxury travel curation & exclusive event access concierge",
     shortDescription:
-      "Developed the frontend of an enterprise data portal for a leading energy conglomerate — building interactive dashboards, data tables, charts, graphs, and multi-module screens with live API integration.",
+      "A bespoke travel concierge platform for high-net-worth clients — covering private aviation, superyacht charters, five-star stays, and premium tickets to global events like F1, the Olympics, and FIFA.",
     longDescription:
-      "Engineered multiple feature-rich modules using Angular — transforming complex backend data into clean, interactive user interfaces. Work involved dynamic charts for data visualization, responsive data tables with filtering and sorting, and seamlessly binding UI components to live REST APIs across several functional modules serving different operational departments of the client.",
-    category: "Enterprise" as Tab,
-    tags: ["Angular", "TypeScript", "REST API", "Data Visualization", "Charts", "Enterprise"] as const,
-    gradientFrom: "#F97316",
-    gradientTo: "#FACC15",
-    stats: ["10+ Modules Built", "Live API Integration", "Enterprise Scale"] as const,
-    illustration: "energy" as const,
-    featured: true,
+      "A luxury travel and concierge website built for a bespoke travel curator serving affluent clients. Beyond a polished, image-led front end showcasing private jets, superyachts, and five-star stays, the site handles inquiry capture for personalized itineraries and exclusive event access, with direct WhatsApp concierge integration so clients can reach the founder before, during, and after their trip. Also includes a travel journal for destination guides and a running list of available premium event tickets.",
+    category: "Web App" as Tab,
+    tags: ["Next.js", "React", "Travel & Concierge", "WhatsApp Integration", "Event Ticketing"] as const,
+    gradientFrom: "#B45309",
+    gradientTo: "#F59E0B",
+    stats: ["WhatsApp Concierge Integration", "Exclusive Event Ticket Access", "Bespoke Itinerary Inquiries"] as const,
+    illustration: "travel" as const,
+    featured: false,
   },
   {
     name: "Querivo",
@@ -106,6 +107,21 @@ const PROJECTS = [
     illustration: "resume-ai" as const,
     featured: false,
   },
+  {
+    name: "PetroDesk",
+    tagline: "Enterprise data portal for India's largest oil & gas company",
+    shortDescription:
+      "Developed the frontend of an enterprise data portal for a leading energy conglomerate — building interactive dashboards, data tables, charts, graphs, and multi-module screens with live API integration.",
+    longDescription:
+      "Engineered multiple feature-rich modules using Angular — transforming complex backend data into clean, interactive user interfaces. Work involved dynamic charts for data visualization, responsive data tables with filtering and sorting, and seamlessly binding UI components to live REST APIs across several functional modules serving different operational departments of the client.",
+    category: "Enterprise" as Tab,
+    tags: ["Angular", "TypeScript", "REST API", "Data Visualization", "Charts", "Enterprise"] as const,
+    gradientFrom: "#F97316",
+    gradientTo: "#FACC15",
+    stats: ["10+ Modules Built", "Live API Integration", "Enterprise Scale"] as const,
+    illustration: "energy" as const,
+    featured: true,
+  },
 ] as const;
 
 // ── Stats bar ─────────────────────────────────────────────────
@@ -138,7 +154,23 @@ export default function PortfolioPage() {
   const isFiltering = query.trim() !== "" || activeTab !== "All";
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+    <>
+      {/* ── Top header bar ───────────────────────────────────── */}
+      <PageHero
+        title="Our Portfolio"
+        subtitle="A selection of our work across enterprise, government, AI/ML, cloud and web platforms"
+        rightSlot={
+          <Link
+            href="/contact"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 transition-all hover:shadow-lg hover:shadow-purple-300 hover:scale-[1.02] active:scale-95"
+          >
+            <Zap size={14} />
+            Get Quote
+          </Link>
+        }
+      />
+
+      <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* ── Decorative background blobs ── */}
       <div
         aria-hidden="true"
@@ -148,27 +180,6 @@ export default function PortfolioPage() {
         aria-hidden="true"
         className="pointer-events-none absolute top-[70%] -right-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
       />
-
-      {/* ── Top header bar ───────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
-        <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-              Our Portfolio
-            </h1>
-            <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
-              A selection of our work across enterprise, government, AI/ML, cloud and web platforms
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 transition-all hover:shadow-lg hover:shadow-purple-300 hover:scale-[1.02] active:scale-95"
-          >
-            <Zap size={14} />
-            Get Quote
-          </Link>
-        </div>
-      </div>
 
       <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
 
@@ -344,5 +355,6 @@ export default function PortfolioPage() {
 
       </div>
     </div>
+    </>
   );
 }

@@ -121,7 +121,7 @@ export default function HomePage() {
           {/* ══ RIGHT — Animated network background ═══════════════ */}
           <div className="animate-fade-in-right delay-200 hidden lg:block">
             <div className="w-full h-[520px]">
-              <NetworkBackground />
+              <NetworkBackground interactiveLetters />
             </div>
           </div>
           {/* ══ END RIGHT ══ */}

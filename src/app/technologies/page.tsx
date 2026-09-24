@@ -18,6 +18,7 @@ import { Cloud, Server } from "lucide-react";
 import TechCard from "@/components/TechCard";
 import Reveal from "@/components/motion/Reveal";
 import AnimatedCounter from "@/components/motion/AnimatedCounter";
+import PageHero from "@/components/PageHero";
 
 // ── Category tabs ──────────────────────────────────────────────
 const TABS = ["All", "Frontend", "Backend", "Mobile", "Database", "Cloud", "DevOps"] as const;
@@ -96,7 +97,23 @@ export default function TechnologiesPage() {
   const isFiltering = query.trim() !== "" || activeTab !== "All";
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
+    <>
+      {/* ── Top header bar ───────────────────────────────────── */}
+      <PageHero
+        title="Technologies & Tools"
+        subtitle="Cutting-edge technologies we use to build exceptional applications"
+        rightSlot={
+          <Link
+            href="/contact"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 transition-all hover:shadow-lg hover:shadow-purple-300 hover:scale-[1.02] active:scale-95"
+          >
+            <Zap size={14} />
+            Get Quote
+          </Link>
+        }
+      />
+
+      <div className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-300">
       {/* ── Decorative background blobs ── */}
       <div
         aria-hidden="true"
@@ -106,27 +123,6 @@ export default function TechnologiesPage() {
         aria-hidden="true"
         className="pointer-events-none absolute top-[65%] -left-24 w-[420px] h-[420px] rounded-full bg-[#7C3AED]/6 blur-3xl"
       />
-
-      {/* ── Top header bar ───────────────────────────────────── */}
-      <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-5 md:pr-10 lg:pl-10">
-        <div className="mx-auto flex max-w-6xl items-start justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-              Technologies &amp; Tools
-            </h1>
-            <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
-              Cutting-edge technologies we use to build exceptional applications
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#2563EB] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-purple-200 transition-all hover:shadow-lg hover:shadow-purple-300 hover:scale-[1.02] active:scale-95"
-          >
-            <Zap size={14} />
-            Get Quote
-          </Link>
-        </div>
-      </div>
 
       <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
 
@@ -294,5 +290,6 @@ export default function TechnologiesPage() {
 
       </div>
     </div>
+    </>
   );
 }
