@@ -14,7 +14,7 @@ interface PageHeroProps {
 // subtle accent on the right (desktop only), matching the homepage hero.
 export default function PageHero({ title, subtitle, rightSlot }: PageHeroProps) {
   return (
-    <div className="sticky top-0 z-20 overflow-hidden border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-10 md:pr-10 lg:pl-10 lg:py-12">
+    <div className="sticky top-0 z-20 overflow-hidden border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 pl-16 pr-6 py-10 md:pr-10 lg:pl-10 lg:pr-[400px] lg:py-12">
       {/* Constellation accent — right side, desktop only */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[360px] opacity-70 lg:block">
         <NetworkBackground />
